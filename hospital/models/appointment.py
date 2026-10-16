@@ -1,28 +1,39 @@
-from doctor import Doctor
-from patient import Patient
-from datetime import datetime, date, time
+
+from tools.validation import validation_id, validation_doctor,validation_patient,validation_date
 
 
 class Appointment:
-    def __init__(self, appointment_id, doctor, patient, date_time):
+    appointments=[]
+    def __init__(self, appointment_id, doctor, patient, date):
+        validation_id(appointment_id)
+        validation_patient(patient)
+        validation_date(date)
+        validation_doctor(doctor)
         self.appointment_id = appointment_id
         self.doctor = doctor
         self.patient = patient
-        self.date_time = date_time
+        self.date = date
+        Appointment.appointments.append(self)
 
     def get_appointment_id(self):
-        return self.__appointment_id
+        return self.appointment_id
 
-    def set_appointment_id(self, appointment_id, doctor, patient, date_time):
-        if isinstance(doctor, Doctor) and isinstance(patient, Patient) and isinstance(date_time, datetime):
-            self.__appointment_id = appointment_id
+    def set_appointment_id(self, appointment_id):
+        validation_id(appointment_id)
+        for appointment in Appointment.appointments:
+            if appointment is not self and appointment.appointment_id == appointment_id:
+                raise ValueError('appointment_id already exists')
+        else:
+            self.appointment_id = appointment_id
 
     def __repr__(self):
-        return f'Doctor({self.doctor},{self.patient},{self.date_time},{self.date_time})'
-
-    def book(self, appointment_id, doctor, patient, date_time):
-        if isinstance(doctor, Doctor) and isinstance(patient, Patient) and isinstance(date_time, datetime):
-            print('booked')
+        return f'Appointment({self.appointment_id},{self.doctor},{self.patient},{self.date})'
 
     def cancel(self, appointment_id):
-        print('cancel')
+        for appointment in Appointment.appointments:
+            if appointment.appointment_id == appointment_id:
+                Appointment.appointments.remove(appointment)
+                print('cancel')
+                break
+        else:
+            raise ValueError('appointment_id does not exist')
