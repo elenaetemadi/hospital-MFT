@@ -6,7 +6,7 @@ from models.appointment import Appointment
 from models.hospital import Hospital
 
 
-print("\n--- Testing Patient ---")
+print(" Testing Patient ")
 
 patient = Patient(
     "12345678", "Ali Ahmadi", "09123456790", "Tehran",
@@ -21,7 +21,7 @@ print(patient.get_disease())
 print(patient.get_birth_date())
 
 
-print("\n--- Testing Doctor ---")
+print(" Testing Doctor ")
 
 doctor = Doctor(
     "87654321", "Sara Ahmadi", "09123456864", "Tehran",
@@ -37,7 +37,7 @@ doctor.examine()
 doctor.prescribe()
 
 
-print("\n--- Testing Appointment ---")
+print(" Testing Appointment ")
 
 appointment = Appointment(
     "45678901",
@@ -51,7 +51,7 @@ print(appointment.get_appointment_id())
 print(Appointment.appointments)
 
 
-print("\n--- Testing Hospital ---")
+print(" Testing Hospital ")
 
 hospital = Hospital("Mehr Hospital", "Tehran", [], [], [])
 
@@ -64,7 +64,7 @@ print(hospital.get_doctors())
 print(hospital.get_appointment())
 
 
-print("\n--- Testing Cancel Appointment ---")
+print(" Testing Cancel Appointment ")
 
 patient.cancel_appointment()
 print(Appointment.appointments)

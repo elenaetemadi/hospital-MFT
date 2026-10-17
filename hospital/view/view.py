@@ -9,7 +9,7 @@ from models.appointment import Appointment
 patients = []
 doctors = Doctor.doctors
 
-# ---------------- Main Window ----------------
+#  Main Window
 
 win = tk.Tk()
 win.title("Hospital Management")
@@ -21,7 +21,7 @@ tk.Label(
     font=("Arial", 18, "bold")
 ).pack(pady=25)
 
-# ---------------- Helper Functions ----------------
+#  Functions
 
 def create_window(title, size="850x550"):
     window = tk.Toplevel(win)
@@ -44,7 +44,7 @@ def refresh_table(table, data):
     for item in data:
         table.insert("", "end", values=item)
 
-# ---------------- Patients Window ----------------
+#  Patients Window
 
 def open_patients():
 
@@ -127,7 +127,7 @@ def open_patients():
 
     show_patients()
 
-# ---------------- Doctors Window ----------------
+#  Doctors Window
 
 def open_doctors():
 
@@ -207,7 +207,7 @@ def open_doctors():
 
     show_doctors()
 
-# ---------------- Appointments Window ----------------
+#  Appointments Window
 
 def open_appointments():
 
@@ -346,7 +346,7 @@ def open_appointments():
     update_choices()
     show_appointments()
 
-# ---------------- Main Menu Buttons ----------------
+#  Main Menu Buttons
 
 tk.Button(
     win, text="Patients", width=25,
