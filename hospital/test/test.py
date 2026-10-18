@@ -1,70 +1,67 @@
-from datetime import date, timedelta
-
-from models.patient import Patient
+#--------------test doctor successfully-----------
+from controller.person_controller import PersonController
+from models import appointment
 from models.doctor import Doctor
+
+doctor1=Doctor(1123456742,'mohsen','mohammadi','09107242144','tehran','radiology',1231231234,10)
+doctor2=Doctor(1234567890,'sara','mehri','09101112525','shiraz','gyn',1212121213,11)
+#
+# print(doctor1)
+
+#--------------test doctor successfully-----------
+from models.patient import Patient
+from datetime import date
+
+birthdate1=date(2007,7,27)
+birthdate2=date(2005,11,5)
+
+parient1=Patient(1203405661,'elena','etemadi','09120143784','tehran',1231231234,'cold',birthdate1)
+parient2=Patient(1203405661,'sahel','ebrahimi','09120145784','tehran',1234231234,'flu',birthdate2)
+#
+# print(parient1)
+# print(parient2)
+
+#--------------test appointment successfully-----------
 from models.appointment import Appointment
-from models.hospital import Hospital
+from datetime import datetime
 
+datetime1=datetime(2026,10,29,13,30,00)
+datetime2=datetime(2026,11,19,10,45,00)
+appointment1=Appointment(1203405661,doctor1,parient1,datetime1)
+appointment2=Appointment(1243405661,doctor2,parient2,datetime2)
+#
+# print(appointment1)
+# print(appointment2)
+#
+# #--------------test hospital successfully-----------
+# from models.hospital import Hospital
+#
+# hospital1 = Hospital('mehr','tehran',doctor1,parient1,appointment1)
+# hospital2 = Hospital('iran','tehran',doctor2,parient2,appointment2)
+# print(hospital1)
+# print(hospital2)
 
-print(" Testing Patient ")
+# #--------------test person successfully-----------
+from models.person import Person
+person1=Person(2121036730,'saba','sharifi','09129423477','tehran')
+person2=Person(2321036730,'arash','bayat','09125423477','tehran')
 
-patient = Patient(
-    "12345678", "Ali Ahmadi", "09123456790", "Tehran",
-    "23456789", "Flu", date(2000, 5, 10)
-)
+#--------------test person data successfully-----------
 
-print(patient)
-print(patient.get_patient_id())
-print(patient.get_disease())
-patient.set_disease("Cold")
-print(patient.get_disease())
-print(patient.get_birth_date())
+#from data_access.person_access import PersonDa
+# person_da1=PersonDa()
+# person_da1.save_person(person1)
+# person_da1.find_all()
 
+#--------------test person controller successfully-----------
 
-print(" Testing Doctor ")
+# from controller.person_controller import PersonController
+# from service.person_service import PersonService
 
-doctor = Doctor(
-    "87654321", "Sara Ahmadi", "09123456864", "Tehran",
-    "Cardiology", "34567890", 5
-)
-
-print(doctor)
-print(doctor.get_license())
-print(doctor.get_experience())
-print(doctor.get_specialty())
-
-doctor.examine()
-doctor.prescribe()
-
-
-print(" Testing Appointment ")
-
-appointment = Appointment(
-    "45678901",
-    doctor,
-    patient,
-    date.today() + timedelta(days=1)
-)
-
-print(appointment)
-print(appointment.get_appointment_id())
-print(Appointment.appointments)
-
-
-print(" Testing Hospital ")
-
-hospital = Hospital("Mehr Hospital", "Tehran", [], [], [])
-
-hospital.set_patient(patient)
-
-print(hospital.get_name())
-print(hospital.get_address())
-print(hospital.get_patient())
-print(hospital.get_doctors())
-print(hospital.get_appointment())
-
-
-print(" Testing Cancel Appointment ")
-
-patient.cancel_appointment()
-print(Appointment.appointments)
+# personcontroller=PersonController()
+# print(personcontroller.save_person(2121036730, 'saba', 'sharifi', '09129423477', 'tehran'))
+# print(personcontroller.save_person(2321036730, 'arash', 'bayat', '09125423477', 'tehran'))
+# print(personcontroller.find_all())
+# print(personcontroller.delete_by_national_id(2121036730))
+# print(personcontroller.find_by_national_id(2321036730))
+# print(personcontroller.find_all())
