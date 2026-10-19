@@ -1,5 +1,5 @@
-from service.person_service import PersonService
-from models.person import Person
+from hospital.service.person_service import PersonService
+from hospital.models.person import Person
 
 class PersonController:
     def __init__(self):

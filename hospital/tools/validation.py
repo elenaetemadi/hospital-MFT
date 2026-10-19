@@ -2,8 +2,6 @@ from datetime import date,datetime
 import re
 
 
-
-
 #--------- validation------------
 
 def validation_name(name):
@@ -29,7 +27,7 @@ def validation_id(my_id):
 #---------appointment validation------------
 
 def validation_appointment(appointment):
-    from models.appointment import Appointment
+    from hospital.models.appointment import Appointment
     if not isinstance(appointment,Appointment):
         raise ValueError(' appointment must be an Appointment')
 
@@ -54,7 +52,7 @@ def validation_experience(experience):
         raise ValueError(' experience must be an integer')
 
 def validation_doctor(doctor):
-    from models.doctor import Doctor
+    from hospital.models.doctor import Doctor
     if not isinstance(doctor,Doctor):
         raise ValueError(' doctor must be an Doctor')
 
@@ -71,6 +69,6 @@ def validation_birth_date(birth_date):
         raise ValueError('date must be in the past')
 
 def validation_patient(patient):
-    from models.patient import Patient
+    from hospital.models.patient import Patient
     if not isinstance(patient,Patient):
         raise ValueError(' patient must be an Patient')

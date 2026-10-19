@@ -1,4 +1,4 @@
-from tools.validation import validation_id, validation_name, validation_phone, validation_address
+from hospital.tools.validation import *
 
 class Person:
     def __init__(self, national_id, name,family, phone, address):

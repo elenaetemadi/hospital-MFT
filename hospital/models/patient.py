@@ -1,7 +1,6 @@
-from models.person import Person
-import random
-from tools.validation import validation_id, validation_disease,validation_birth_date
-from models.appointment import Appointment
+from hospital.models.person import Person
+from hospital.tools.validation import validation_id, validation_disease,validation_birth_date
+from hospital.models.appointment import Appointment
 
 class Patient(Person):
     def __init__(self, national_id, name, family,phone, address, patient_id, disease, birth_date):

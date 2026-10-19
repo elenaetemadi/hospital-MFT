@@ -1,15 +1,15 @@
 #--------------test doctor successfully-----------
-from controller.person_controller import PersonController
-from models import appointment
-from models.doctor import Doctor
+from hospital.controller.person_controller import PersonController
+from hospital.models import appointment
+from hospital.models.doctor import Doctor
 
 doctor1=Doctor(1123456742,'mohsen','mohammadi','09107242144','tehran','radiology',1231231234,10)
 doctor2=Doctor(1234567890,'sara','mehri','09101112525','shiraz','gyn',1212121213,11)
 #
-# print(doctor1)
+#print(doctor1)
 
 #--------------test doctor successfully-----------
-from models.patient import Patient
+from hospital.models.patient import Patient
 from datetime import date
 
 birthdate1=date(2007,7,27)
@@ -22,7 +22,7 @@ parient2=Patient(1203405661,'sahel','ebrahimi','09120145784','tehran',1234231234
 # print(parient2)
 
 #--------------test appointment successfully-----------
-from models.appointment import Appointment
+from hospital.models.appointment import Appointment
 from datetime import datetime
 
 datetime1=datetime(2026,10,29,13,30,00)
@@ -34,7 +34,7 @@ appointment2=Appointment(1243405661,doctor2,parient2,datetime2)
 # print(appointment2)
 #
 # #--------------test hospital successfully-----------
-# from models.hospital import Hospital
+# from hospital.models.hospital import Hospital
 #
 # hospital1 = Hospital('mehr','tehran',doctor1,parient1,appointment1)
 # hospital2 = Hospital('iran','tehran',doctor2,parient2,appointment2)
@@ -42,22 +42,22 @@ appointment2=Appointment(1243405661,doctor2,parient2,datetime2)
 # print(hospital2)
 
 # #--------------test person successfully-----------
-from models.person import Person
+from hospital.models.person import Person
 person1=Person(2121036730,'saba','sharifi','09129423477','tehran')
 person2=Person(2321036730,'arash','bayat','09125423477','tehran')
 
 #--------------test person data successfully-----------
 
-#from data_access.person_access import PersonDa
+#from hospital.data_access.person_access import PersonDa
 # person_da1=PersonDa()
 # person_da1.save_person(person1)
 # person_da1.find_all()
 
 #--------------test person controller successfully-----------
 
-# from controller.person_controller import PersonController
-# from service.person_service import PersonService
-
+# from hospital.controller.person_controller import PersonController
+# from hospital.service.person_service import PersonService
+#
 # personcontroller=PersonController()
 # print(personcontroller.save_person(2121036730, 'saba', 'sharifi', '09129423477', 'tehran'))
 # print(personcontroller.save_person(2321036730, 'arash', 'bayat', '09125423477', 'tehran'))

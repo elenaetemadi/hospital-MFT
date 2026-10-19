@@ -1,4 +1,4 @@
-from data_access.person_access import *
+from hospital.data_access.person_access import *
 
 
 class PersonService:

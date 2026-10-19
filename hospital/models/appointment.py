@@ -1,5 +1,4 @@
-
-from tools.validation import validation_id, validation_doctor,validation_patient,validation_datetime
+from hospital.tools.validation import *
 
 
 class Appointment:
@@ -40,9 +39,6 @@ class Appointment:
 
     def __repr__(self):
         return f'Appointment({self.appointment_id},{self.doctor},{self.patient},{self.appointment_datetime})'
-
-    def cancel(self, appointment_id):
-        print('cancel')
 
     appointment_id = property(get_appointment_id, set_appointment_id)
     appointment_datetime= property(get_appointment_datetime, set_appointment_datetime)
