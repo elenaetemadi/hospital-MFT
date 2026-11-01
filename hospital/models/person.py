@@ -1,4 +1,4 @@
-#
+
 from tools.validation import validation_id, validation_name, validation_phone, validation_address
 
 class Person:
