@@ -1,7 +1,7 @@
 
 from tools.validation import validation_id, validation_doctor,validation_patient,validation_datetime
 
-
+#
 class Appointment:
     def __init__(self, appointment_id, doctor, patient, appointment_datetime):
         self.appointment_id = appointment_id

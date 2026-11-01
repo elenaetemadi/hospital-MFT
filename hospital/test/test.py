@@ -85,18 +85,18 @@ from models.person import Person
 
 
 #--------------test patient controller successfully-----------
-# from controller.patient_controller import PatientController
-# from service.patient_service import PatientService
+from controller.patient_controller import PatientController
+from service.patient_service import PatientService
 #
 #
-# birthdate1=date(2007,7,27)
-# birthdate2=date(1990,5,25)
-# birthdate3=date(1995,11,13)
+birthdate1=date(2007,7,27)
+birthdate2=date(1990,5,25)
+birthdate3=date(1995,11,13)
 #
-# patientcontroller = PatientController()
-# print(patientcontroller.save_patient(4984486053,'elena','etemadi','09121652424','shiraz',1020304050,'flu',birthdate1))
-# print(patientcontroller.save_patient(4934486053,'sina','sohrabi','09121162434','isfahan',2020302450,'cancer',birthdate2))
-# print(patientcontroller.save_patient(4982286053,'hamed','zand','09122262424','rasht',3023404050,'diabetes',birthdate3))
+patientcontroller = PatientController()
+print(patientcontroller.save_patient(4984486053,'elena','etemadi','09121652424','shiraz',1020304050,'flu',birthdate1))
+print(patientcontroller.save_patient(4934486053,'sina','sohrabi','09121162434','isfahan',2020302450,'cancer',birthdate2))
+print(patientcontroller.save_patient(4982286053,'hamed','zand','09122262424','rasht',3023404050,'diabetes',birthdate3))
 # print('.'*10)
 # print(patientcontroller.find_all_patient())
 # print('.'*10)
