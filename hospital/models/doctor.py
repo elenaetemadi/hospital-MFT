@@ -1,5 +1,5 @@
-from hospital.models.person import Person
-from hospital.tools.validation import *
+from models.person import Person
+from tools.validation import *
 
 class Doctor(Person):
     def __init__(self, national_id, name,family,phone, address, specialty, license, experience):

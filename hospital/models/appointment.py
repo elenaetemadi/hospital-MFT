@@ -1,4 +1,4 @@
-from hospital.tools.validation import *
+from tools.validation import *
 
 #
 class Appointment:

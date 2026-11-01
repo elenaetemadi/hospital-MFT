@@ -1,7 +1,7 @@
 from tools.validation import *
 from models.doctor import Doctor
-from models.patient import Patient
-from models.appointment import Appointment
+from patient import Patient
+from appointment import Appointment
 
 class Hospital:
     def __init__(self, name, address, doctors, patients, appointments):
