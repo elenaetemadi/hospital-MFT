@@ -1,5 +1,5 @@
-from models.person import Person
-from tools.validation import *
+from hospital.models.person import Person
+from hospital.tools.validation import *
 
 class Doctor(Person):
     def __init__(self, national_id, name,family,phone, address, specialty, license, experience):
@@ -31,12 +31,6 @@ class Doctor(Person):
     def set_specialty(self, specialty):
         validation_specialty(specialty)
         self.__specialty = specialty
-
-    def examine(self):
-        print("The doctor examined the patient")
-
-    def prescribe(self):
-        print("The doctor prescribed the patient")
 
     license = property(get_license, set_license)
     experience = property(get_experience, set_experience)

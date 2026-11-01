@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import date
 
-from models.patient import Patient
-from models.doctor import Doctor
-from models.appointment import Appointment
+from hospital.models.patient import Patient
+from hospital.models.doctor import Doctor
+from hospital.models.appointment import Appointment
 
 patients = []
 doctors = Doctor.doctors
