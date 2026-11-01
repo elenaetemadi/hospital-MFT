@@ -18,6 +18,8 @@ class PersonController:
         try:
             self.person_service.delete_by_national_id(national_id)
             return "Deleted person"
+        except ValueError as e:
+            return str(e)
         except Exception as e:
             print(e)
             return "Error deleting person"
@@ -25,6 +27,8 @@ class PersonController:
     def find_by_national_id(self,national_id):
         try:
             return self.person_service.find_by_national_id(national_id),"Found person"
+        except ValueError as e:
+            return str(e)
         except Exception as e:
             print(e)
             return "Error finding person"

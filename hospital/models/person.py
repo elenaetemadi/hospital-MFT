@@ -9,7 +9,7 @@ class Person:
         self.address = address
 
     def __repr__(self):
-        return f'{self.national_id} {self.name} {self.family} {self.phone} {self.address}'
+        return f'Person({self.national_id},{self.name},{self.family},{self.phone},{self.address})'
     def get_national_id(self):
         return self.__national_id
 

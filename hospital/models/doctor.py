@@ -9,7 +9,7 @@ class Doctor(Person):
         self.experience = experience
 
     def __repr__(self):
-        return f'Doctor({self.national_id},{self.name},{self.family},{self.phone},{self.address},{self.specialty},{self.license}{self.experience})'
+        return f'Doctor({self.national_id},{self.name},{self.family},{self.phone},{self.address},{self.specialty},{self.license},{self.experience})'
 
     def get_license(self):
         return self.__license
