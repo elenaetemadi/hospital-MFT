@@ -1,10 +1,11 @@
 #--------------test doctor successfully-----------
-from controller.person_controller import PersonController
-from models import appointment
-from models.doctor import Doctor
-
-doctor1=Doctor(1123456742,'mohsen','mohammadi','09107242144','tehran','radiology',1231231234,10)
-doctor2=Doctor(1234567890,'sara','mehri','09101112525','shiraz','gyn',1212121213,11)
+# from controller.person_controller import PersonController
+# from models import appointment
+# from models.doctor import Doctor
+# from models.patient import Patient
+#
+# doctor1=Doctor(1123456742,'mohsen','mohammadi','09107242144','tehran','radiology',1231231234,10)
+# doctor2=Doctor(1234567890,'sara','mehri','09101112525','shiraz','gyn',1212121213,11)
 #
 #print(doctor1)
 
@@ -83,37 +84,45 @@ from models.person import Person
 #
 # print(doctorcontroller.find_all_doctors())
 
+#--------------test appointment controller successfully-----------
+# from controller.appointment_controller import AppointmentController
+# from service.appointment_service import AppointmentService
+#
+# date_times1=datetime(2026,12,14,13,30)
+# date_times2=datetime(2027,12,14,17,15)
+# date_times3=datetime(2026,10,14,18,15)
+# date_times4=datetime(2027,12,24,10,30)
+# bith_date1=date(1990,12,2)
+# bith_date2=date(2001,10,14)
+# bith_date3=date(1990,5,27)
+# doctor1=Doctor(2121036730, 'saba', 'sharifi', '09129423477', 'tehran','psychiatry',2121036731,10)
+# doctor2=Doctor(2321036730, 'arash', 'bayat', '09125423477', 'tehran','urology',2121036734,5)
+# patient1=Patient(4980486053,'sina','alipour','09129423478', 'tehran',1212121212,'flu',bith_date1)
+# patient2=Patient(4980484053,'roya','alizadeh','09129429478', 'rasht',1212123212,'flu',bith_date2)
+#
+# appointmentcontroller = AppointmentController()
+#
+# print(appointmentcontroller.save_appointment(1234567890,doctor1,patient1,date_times1))
+# print(appointmentcontroller.save_appointment(1314151617,doctor2,patient2,date_times2))
+# print(appointmentcontroller.save_appointment(1234567890,doctor1,patient1,date_times3))
+# print(appointmentcontroller.save_appointment(1214567890,doctor2,patient2,date_times4))
+# print('.'*50)
+# print(appointmentcontroller.find_all_appointments())
+# print('.'*50)
+# print(appointmentcontroller.find_by_appointment_id(1214567890))
+# print(appointmentcontroller.find_by_appointment_id(1214568890))
+# print('.'*50)
+# print(appointmentcontroller.delete_appointment(1214567890))
+# print('.'*50)
+# print(appointmentcontroller.find_all_appointments())
+# print('.'*50)
+# print(appointmentcontroller.delete_appointment(9214567890))
+# print('.'*50)
+# print(appointmentcontroller.find_doctor('arash','bayat'))
+# print('.'*50)
+# print(appointmentcontroller.find_patient('sina','alipour'))
 
-#--------------test patient controller successfully-----------
-from controller.patient_controller import PatientController
-from service.patient_service import PatientService
-#
-#
-birthdate1=date(2007,7,27)
-birthdate2=date(1990,5,25)
-birthdate3=date(1995,11,13)
-#
-patientcontroller = PatientController()
-print(patientcontroller.save_patient(4984486053,'elena','etemadi','09121652424','shiraz',1020304050,'flu',birthdate1))
-print(patientcontroller.save_patient(4934486053,'sina','sohrabi','09121162434','isfahan',2020302450,'cancer',birthdate2))
-print(patientcontroller.save_patient(4982286053,'hamed','zand','09122262424','rasht',3023404050,'diabetes',birthdate3))
-# print('.'*10)
-# print(patientcontroller.find_all_patient())
-# print('.'*10)
-# print(patientcontroller.find_by_patient_id(2020302450))
-# print(patientcontroller.find_by_patient_id(6020302450))
-# print('.'*10)
-# print(patientcontroller.delete_by_patient_id(3023404050))
-# print(patientcontroller.delete_by_patient_id(3020102450))
-# print('.'*10)
-#
-# print(patientcontroller.book_appointment(1020304050))
-# print(patientcontroller.book_appointment(1120304050))
-# print('.'*10)
-#
-# print(patientcontroller.cancel_appointment())
-# print('.'*10)
-#
-# print(patientcontroller.get_medical_history(2020302450))
-# print(patientcontroller.get_medical_history(1020304050))
-# print(patientcontroller.get_medical_history(5020302450))
+
+
+
+
