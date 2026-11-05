@@ -1,366 +1,393 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
-from datetime import date
-
-from hospital.models.patient import Patient
-from hospital.models.doctor import Doctor
-from hospital.models.appointment import Appointment
-
-patients = []
-doctors = Doctor.doctors
-
-#  Main Window
-
-win = tk.Tk()
-win.title("Hospital Management")
-win.geometry("500x350")
-
-tk.Label(
-    win,
-    text="Hospital Management System",
-    font=("Arial", 18, "bold")
-).pack(pady=25)
-
-#  Functions
-
-def create_window(title, size="850x550"):
-    window = tk.Toplevel(win)
-    window.title(title)
-    window.geometry(size)
-    return window
-
-def add_field(parent, label, row):
-    tk.Label(parent, text=label).grid(
-        row=row, column=0, padx=8, pady=6, sticky="w"
-    )
-    entry = tk.Entry(parent, width=28)
-    entry.grid(row=row, column=1, padx=8, pady=6)
-    return entry
-
-def refresh_table(table, data):
-    for item in table.get_children():
-        table.delete(item)
-
-    for item in data:
-        table.insert("", "end", values=item)
-
-#  Patients Window
-
-def open_patients():
-
-    window = create_window("Patients")
-
-    form = tk.LabelFrame(window, text="Register Patient")
-    form.pack(fill="x", padx=10, pady=10)
-
-    name = add_field(form, "Name", 0)
-    national_id = add_field(form, "National ID", 1)
-    phone = add_field(form, "Phone", 2)
-    address = add_field(form, "Address", 3)
-    patient_id = add_field(form, "Patient ID", 4)
-    disease = add_field(form, "Disease", 5)
-    birth_date = add_field(form, "Birth Date (YYYY-MM-DD)", 6)
-
-    columns = ("name", "national_id", "phone", "patient_id",
-               "disease", "birth_date")
-
-    table = ttk.Treeview(
-        window, columns=columns, show="headings", height=10
-    )
-
-    headings = {
-        "name": "Name",
-        "national_id": "National ID",
-        "phone": "Phone",
-        "patient_id": "Patient ID",
-        "disease": "Disease",
-        "birth_date": "Birth Date"
-    }
-
-    for column, heading in headings.items():
-        table.heading(column, text=heading)
-        table.column(column, width=120)
-
-    table.pack(fill="both", expand=True, padx=10, pady=10)
-
-    def show_patients():
-        data = []
-        for p in patients:
-            data.append((
-                p.name,
-                p.national_id,
-                p.phone,
-                p.patient_id,
-                p.disease,
-                p.birth_date
-            ))
-        refresh_table(table, data)
-
-    def save_patient():
-        try:
-            birthday = date.fromisoformat(birth_date.get().strip())
-
-            patient = Patient(
-                national_id.get().strip(),
-                name.get().strip(),
-                phone.get().strip(),
-                address.get().strip(),
-                patient_id.get().strip(),
-                disease.get().strip(),
-                birthday
-            )
-
-            patients.append(patient)
-            show_patients()
-            messagebox.showinfo("Patient", "Patient registered successfully")
-
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
-
-    tk.Button(
-        form, text="Save Patient", command=save_patient
-    ).grid(row=7, column=0, columnspan=2, pady=10)
-
-    tk.Button(
-        window, text="Refresh", command=show_patients
-    ).pack(pady=5)
-
-    show_patients()
-
-#  Doctors Window
-
-def open_doctors():
-
-    window = create_window("Doctors")
-
-    form = tk.LabelFrame(window, text="Register Doctor")
-    form.pack(fill="x", padx=10, pady=10)
-
-    name = add_field(form, "Name", 0)
-    national_id = add_field(form, "National ID", 1)
-    phone = add_field(form, "Phone", 2)
-    address = add_field(form, "Address", 3)
-    specialty = add_field(form, "Specialty", 4)
-    license_id = add_field(form, "License", 5)
-    experience = add_field(form, "Experience (years)", 6)
-
-    columns = ("name", "national_id", "phone",
-               "specialty", "license", "experience")
-
-    table = ttk.Treeview(
-        window, columns=columns, show="headings", height=10
-    )
-
-    headings = {
-        "name": "Name",
-        "national_id": "National ID",
-        "phone": "Phone",
-        "specialty": "Specialty",
-        "license": "License",
-        "experience": "Experience"
-    }
-
-    for column, heading in headings.items():
-        table.heading(column, text=heading)
-        table.column(column, width=125)
-
-    table.pack(fill="both", expand=True, padx=10, pady=10)
-
-    def show_doctors():
-        data = []
-        for d in doctors:
-            data.append((
-                d.name,
-                d.national_id,
-                d.phone,
-                d.specialty,
-                d.license,
-                d.experience
-            ))
-        refresh_table(table, data)
-
-    def save_doctor():
-        try:
-            doctor = Doctor(
-                national_id.get().strip(),
-                name.get().strip(),
-                phone.get().strip(),
-                address.get().strip(),
-                specialty.get().strip(),
-                license_id.get().strip(),
-                int(experience.get())
-            )
-
-            show_doctors()
-            messagebox.showinfo("Doctor", "Doctor registered successfully")
-
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
-
-    tk.Button(
-        form, text="Save Doctor", command=save_doctor
-    ).grid(row=7, column=0, columnspan=2, pady=10)
-
-    tk.Button(
-        window, text="Refresh", command=show_doctors
-    ).pack(pady=5)
-
-    show_doctors()
-
-#  Appointments Window
-
-def open_appointments():
-
-    window = create_window("Appointments")
-
-    form = tk.LabelFrame(window, text="Book Appointment")
-    form.pack(fill="x", padx=10, pady=10)
-
-    tk.Label(form, text="Patient").grid(
-        row=0, column=0, padx=8, pady=6
-    )
-
-    patient_var = tk.StringVar()
-    patient_box = ttk.Combobox(
-        form,
-        textvariable=patient_var,
-        state="readonly",
-        width=35
-    )
-    patient_box.grid(row=0, column=1, padx=8, pady=6)
-
-    tk.Label(form, text="Doctor").grid(
-        row=1, column=0, padx=8, pady=6
-    )
-
-    doctor_var = tk.StringVar()
-    doctor_box = ttk.Combobox(
-        form,
-        textvariable=doctor_var,
-        state="readonly",
-        width=35
-    )
-    doctor_box.grid(row=1, column=1, padx=8, pady=6)
-
-    appointment_date = add_field(form, "Date (YYYY-MM-DD)", 2)
-
-    columns = ("appointment_id", "patient", "doctor", "date")
-
-    table = ttk.Treeview(
-        window, columns=columns, show="headings", height=12
-    )
-
-    for column, heading in (
-        ("appointment_id", "Appointment ID"),
-        ("patient", "Patient"),
-        ("doctor", "Doctor"),
-        ("date", "Date")
-    ):
-        table.heading(column, text=heading)
-        table.column(column, width=170)
-
-    table.pack(fill="both", expand=True, padx=10, pady=10)
-
-    def update_choices():
-        patient_box["values"] = [
-            f"{p.patient_id} - {p.name}" for p in patients
-        ]
-
-        doctor_box["values"] = [
-            f"{d.license} - {d.name}" for d in doctors
-        ]
-
-    def show_appointments():
-        data = []
-        for a in Appointment.appointments:
-            data.append((
-                a.appointment_id,
-                a.patient.name,
-                a.doctor.name,
-                a.date
-            ))
-        refresh_table(table, data)
-
-    def book_appointment():
-        try:
-            patient_index = patient_box.current()
-            doctor_index = doctor_box.current()
-
-            if patient_index == -1 or doctor_index == -1:
-                raise ValueError("Select a patient and a doctor")
-
-            selected_date = date.fromisoformat(
-                appointment_date.get().strip()
-            )
-
-            patient = patients[patient_index]
-            doctor = doctors[doctor_index]
-
-            patient.book(doctor, selected_date)
-
-            show_appointments()
-            messagebox.showinfo(
-                "Appointment", "Appointment booked successfully"
-            )
-
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
-
-    def cancel_appointment():
-        selected = table.selection()
-
-        if not selected:
-            messagebox.showerror(
-                "Error", "Select an appointment from the table"
-            )
-            return
-
-        appointment_id = table.item(
-            selected[0], "values"
-        )[0]
-
-        for appointment in Appointment.appointments[:]:
-            if str(appointment.appointment_id) == str(appointment_id):
-                Appointment.appointments.remove(appointment)
-                break
-
-        show_appointments()
-        messagebox.showinfo("Appointment", "Appointment cancelled")
-
-    tk.Button(
-        form, text="Book Appointment", command=book_appointment
-    ).grid(row=3, column=0, columnspan=2, pady=8)
-
-    buttons = tk.Frame(window)
-    buttons.pack(pady=5)
-
-    tk.Button(
-        buttons, text="Refresh", command=show_appointments
-    ).pack(side="left", padx=5)
-
-    tk.Button(
-        buttons, text="Cancel Selected Appointment",
-        command=cancel_appointment
-    ).pack(side="left", padx=5)
-
-    update_choices()
-    show_appointments()
-
-#  Main Menu Buttons
-
-tk.Button(
-    win, text="Patients", width=25,
-    command=open_patients
-).pack(pady=8)
-
-tk.Button(
-    win, text="Doctors", width=25,
-    command=open_doctors
-).pack(pady=8)
-
-tk.Button(
-    win, text="Appointments", width=25,
-    command=open_appointments
-).pack(pady=8)
-
-win.mainloop()
+from tkinter import messagebox
+from datetime import datetime
+
+class HospitalView:
+    def __init__(self, patient_controller, doctor_controller,
+                 appointment_controller, hospital_controller):
+
+        self.patient_controller = patient_controller
+        self.doctor_controller = doctor_controller
+        self.appointment_controller = appointment_controller
+        self.hospital_controller = hospital_controller
+
+        self.window = tk.Tk()
+        self.window.title("Hospital Management System")
+        self.window.geometry("800x700")
+        self.create_patient()
+        self.create_doctor()
+        self.create_appointment()
+        self.create_hospital()
+# -------------------- PATIENT --------------------
+
+    def create_patient(self):
+        window = tk.Toplevel(self.window)
+        window.title("Patient")
+        window.geometry("400x600")
+
+        tk.Label(window, text="PATIENT", font=("Arial", 16)).pack(pady=10)
+
+        tk.Label(window, text="National ID").pack()
+        national_id = tk.Entry(window)
+        national_id.pack()
+
+        tk.Label(window, text="Name").pack()
+        name = tk.Entry(window)
+        name.pack()
+
+        tk.Label(window, text="Family").pack()
+        family = tk.Entry(window)
+        family.pack()
+
+        tk.Label(window, text="Phone").pack()
+        phone = tk.Entry(window)
+        phone.pack()
+
+        tk.Label(window, text="Address").pack()
+        address = tk.Entry(window)
+        address.pack()
+
+        tk.Label(window, text="Patient ID").pack()
+        patient_id = tk.Entry(window)
+        patient_id.pack()
+
+        tk.Label(window, text="Disease").pack()
+        disease = tk.Entry(window)
+        disease.pack()
+
+        tk.Label(window, text="Birth Date (YYYY-MM-DD)").pack()
+        birth_date = tk.Entry(window)
+        birth_date.pack()
+
+        def save():
+            try:
+                birth = datetime.strptime(
+                    birth_date.get(), "%Y-%m-%d"
+                ).date()
+
+                result = self.patient_controller.save_patient(
+                    int(national_id.get()),
+                    name.get(),
+                    family.get(),
+                    phone.get(),
+                    address.get(),
+                    int(patient_id.get()),
+                    disease.get(),
+                    birth
+                )
+
+                messagebox.showinfo("Patient", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def find():
+            try:
+                result = self.patient_controller.find_by_patient_id(
+                    int(patient_id.get())
+                )
+                messagebox.showinfo("Patient", str(self.get_object(result)))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def delete():
+            try:
+                result = self.patient_controller.delete_by_patient_id(
+                    int(patient_id.get())
+                )
+                messagebox.showinfo("Patient", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def show_all():
+            try:
+                result = self.patient_controller.find_all_patient()
+                messagebox.showinfo("Patients", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        tk.Button(window, text="Save Patient", command=save).pack(pady=5)
+        tk.Button(window, text="Find Patient", command=find).pack(pady=5)
+        tk.Button(window, text="Delete Patient", command=delete).pack(pady=5)
+        tk.Button(window, text="Show All Patients", command=show_all).pack(pady=5)
+
+# -------------------- DOCTOR --------------------
+
+    def create_doctor(self):
+        window = tk.Toplevel(self.window)
+        window.title("Doctor")
+        window.geometry("400x600")
+
+        tk.Label(window, text="DOCTOR", font=("Arial", 16)).pack(pady=10)
+
+        tk.Label(window, text="National ID").pack()
+        national_id = tk.Entry(window)
+        national_id.pack()
+
+        tk.Label(window, text="Name").pack()
+        name = tk.Entry(window)
+        name.pack()
+
+        tk.Label(window, text="Family").pack()
+        family = tk.Entry(window)
+        family.pack()
+
+        tk.Label(window, text="Phone").pack()
+        phone = tk.Entry(window)
+        phone.pack()
+
+        tk.Label(window, text="Address").pack()
+        address = tk.Entry(window)
+        address.pack()
+
+        tk.Label(window, text="Specialty").pack()
+        specialty = tk.Entry(window)
+        specialty.pack()
+
+        tk.Label(window, text="License").pack()
+        license_entry = tk.Entry(window)
+        license_entry.pack()
+
+        tk.Label(window, text="Experience").pack()
+        experience = tk.Entry(window)
+        experience.pack()
+
+        def save():
+            try:
+                result = self.doctor_controller.save_doctor(
+                    national_id.get(),
+                    name.get(),
+                    family.get(),
+                    phone.get(),address.get(),
+                    specialty.get(),
+                    int(license_entry.get()),
+                    int(experience.get())
+                )
+
+                messagebox.showinfo("Doctor", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def find():
+            try:
+                result = self.doctor_controller.find_by_license(
+                    int(license_entry.get())
+                )
+                messagebox.showinfo("Doctor", str(self.get_object(result)))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def delete():
+            try:
+                result = self.doctor_controller.delete_by_license(
+                    int(license_entry.get())
+                )
+                messagebox.showinfo("Doctor", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def show_all():
+            try:
+                result = self.doctor_controller.find_all_doctors()
+                messagebox.showinfo("Doctors", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        tk.Button(window, text="Save Doctor", command=save).pack(pady=5)
+        tk.Button(window, text="Find Doctor", command=find).pack(pady=5)
+        tk.Button(window, text="Delete Doctor", command=delete).pack(pady=5)
+        tk.Button(window, text="Show All Doctors", command=show_all).pack(pady=5)
+
+    # -------------------- APPOINTMENT --------------------
+
+    def create_appointment(self):
+        window = tk.Toplevel(self.window)
+        window.title("Appointment")
+        window.geometry("400x500")
+
+        tk.Label(window, text="APPOINTMENT", font=("Arial", 16)).pack(pady=10)
+
+        tk.Label(window, text="Appointment ID").pack()
+        appointment_id = tk.Entry(window)
+        appointment_id.pack()
+
+        tk.Label(window, text="Patient ID").pack()
+        patient_id = tk.Entry(window)
+        patient_id.pack()
+
+        tk.Label(window, text="Doctor License").pack()
+        doctor_license = tk.Entry(window)
+        doctor_license.pack()
+
+        tk.Label(window, text="Date and Time (YYYY-MM-DD HH:MM)").pack()
+        appointment_date = tk.Entry(window)
+        appointment_date.pack()
+
+        def save():
+            try:
+                patient = self.patient_controller.find_by_patient_id(
+                    int(patient_id.get())
+                )
+                patient = self.get_object(patient)
+
+                doctor = self.doctor_controller.find_by_license(
+                    int(doctor_license.get())
+                )
+                doctor = self.get_object(doctor)
+
+                date_time = datetime.strptime(
+                    appointment_date.get(), "%Y-%m-%d %H:%M"
+                )
+
+                result = self.appointment_controller.save_appointment(
+                    int(appointment_id.get()),
+                    doctor,
+                    patient,
+                    date_time
+                )
+
+                messagebox.showinfo("Appointment", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def find():
+            try:
+                result = self.appointment_controller.find_by_appointment_id(
+                    int(appointment_id.get())
+                )
+                messagebox.showinfo("Appointment", str(self.get_object(result)))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def delete():
+            try:
+                result = self.appointment_controller.delete_appointment(
+                    int(appointment_id.get())
+                )
+                messagebox.showinfo("Appointment", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def show_all():
+            try:
+                result = self.appointment_controller.find_all_appointments()
+                messagebox.showinfo("Appointments", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        tk.Button(window, text="Save Appointment", command=save).pack(pady=5)
+        tk.Button(window, text="Find Appointment", command=find).pack(pady=5)
+        tk.Button(window, text="Delete Appointment", command=delete).pack(pady=5)
+        tk.Button(window, text="Show All Appointments", command=show_all).pack(pady=5)
+
+    # -------------------- HOSPITAL --------------------
+
+    def create_hospital(self):
+        window = tk.Toplevel(self.window)
+        window.title("Hospital")
+        window.geometry("400x350")
+
+        tk.Label(window, text="HOSPITAL", font=("Arial", 16)).pack(pady=15)
+
+        def show_patients():
+            try:
+                result = self.hospital_controller.find_all_patient()
+                messagebox.showinfo("Patients", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def show_doctors():
+            try:
+                result = self.hospital_controller.find_all_doctor()
+                messagebox.showinfo("Doctors", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def show_appointments():
+            try:
+                result = self.hospital_controller.find_all_appointment()
+                messagebox.showinfo("Appointments", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        tk.Button(window, text="Show All Patients",
+                  command=show_patients).pack(pady=10)
+
+        tk.Button(window, text="Show All Doctors",
+                  command=show_doctors).pack(pady=10)
+
+        tk.Button(window, text="Show All Appointments",
+                  command=show_appointments).pack(pady=10)
+
+    # -------------------- HELPER --------------------
+
+    def get_object(self, result):
+        if isinstance(result, tuple):
+            return result[0]
+        return result
+
+    # -------------------- INITIALIZE --------------------
+
+    def __init__(self, patient_controller, doctor_controller,
+                 appointment_controller, hospital_controller):
+
+        self.patient_controller = patient_controller
+        self.doctor_controller = doctor_controller
+        self.appointment_controller = appointment_controller
+        self.hospital_controller = hospital_controller
+
+        self.window = tk.Tk()
+        self.window.title("Hospital Management System")
+        self.window.geometry("400x400")
+
+        tk.Label(
+            self.window,
+            text="HOSPITAL MANAGEMENT SYSTEM",
+            font=("Arial", 16)
+        ).pack(pady=30)
+
+        tk.Button(
+            self.window,
+            text="Patient",
+            width=25,
+            command=self.create_patient
+        ).pack(pady=10)
+
+        tk.Button(
+            self.window,
+            text="Doctor",
+            width=25,
+            command=self.create_doctor
+        ).pack(pady=10)
+
+        tk.Button(
+            self.window,
+            text="Appointment",
+            width=25,
+            command=self.create_appointment
+        ).pack(pady=10)
+
+        tk.Button(
+            self.window,
+            text="Hospital",
+            width=25,
+            command=self.create_hospital
+        ).pack(pady=10)
+
+    def run(self):
+        self.window.mainloop()
+

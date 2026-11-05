@@ -1,15 +1,13 @@
 from tools.validation import *
-from models.doctor import Doctor
-from patient import Patient
-from appointment import Appointment
+
 
 class Hospital:
     def __init__(self, name, address, doctors, patients, appointments):
         self.name = name
         self.address = address
-        self.doctors = doctors if doctors is not None else []
-        self.patient = patients if patients is not None else []
-        self.appointments = appointments if appointments is not None else []
+        self.doctors = doctors
+        self.patient = patients
+        self.appointments = appointments
 
     def __repr__(self):
         return f'Hospital( {self.name},{self.address},{self.doctors},{self.patient},{self.appointments})'

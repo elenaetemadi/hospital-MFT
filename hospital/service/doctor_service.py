@@ -1,9 +1,8 @@
 
-from data_access.doctor_access import *
-
 class DoctorService:
-    def __init__(self):
-        self.data=DoctorDa()
+    def __init__(self,doctor_da,appointment_service):
+        self.data=doctor_da
+        self.appointment_service=appointment_service
 
     def save_doctor(self, doctor):
         for doctors in self.data.doctor_list:
@@ -19,10 +18,13 @@ class DoctorService:
         return self.data.find_by_license(license)
 
     def examine(self):
-        self.data.examine()
+        return self.data.examine()
 
     def prescribe(self):
-        self.data.prescribe()
+        return self.data.prescribe()
 
     def find_all_doctors(self):
         return self.data.find_all_doctors()
+
+    def find_todays_appointments(self,license):
+        return self.appointment_service.find_today_appointments(license)

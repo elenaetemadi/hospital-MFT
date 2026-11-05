@@ -1,9 +1,9 @@
-from service.appointment_service import *
+
 from models.appointment import Appointment
 
 class AppointmentController:
-    def __init__(self):
-        self.appointment_service = AppointmentService()
+    def __init__(self,appointment_service):
+        self.appointment_service = appointment_service
 
     def save_appointment(self,appointment_id, doctor, patient, appointment_datetime):
         try:
@@ -66,4 +66,16 @@ class AppointmentController:
             print(e)
             return "Error finding appointment for this patient"
 
+    def find_patient_appointments(self, patient_id):
+        try:
+            return self.appointment_service.find_patient_appointments(patient_id)
+        except Exception as e:
+            print(e)
+            return "Error finding patient appointments"
 
+    def find_today_appointments(self, license):
+        try:
+            return self.appointment_service.find_today_appointments(license)
+        except Exception as e:
+            print(e)
+            return "Error finding today's appointments"

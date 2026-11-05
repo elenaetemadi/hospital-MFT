@@ -1,9 +1,9 @@
-from service.doctor_service import *
+
 from models.doctor import Doctor
 
 class DoctorController:
-    def __init__(self):
-        self.doctor_service = DoctorService()
+    def __init__(self,doctor_service):
+        self.doctor_service = doctor_service
 
     def save_doctor(self,national_id, name,family,phone, address, specialty, license, experience):
         try:
@@ -18,6 +18,7 @@ class DoctorController:
         try:
             self.doctor_service.delete_by_license(license)
             return "deleted doctor successfully"
+
         except ValueError as e:
             return str(e)
 
@@ -57,3 +58,10 @@ class DoctorController:
         except Exception as e:
             print(e)
             return "Error finding all doctors"
+
+    def find_today_appointments(self,license):
+        try:
+            return self.doctor_service.find_todays_appointments(license)
+        except Exception as e:
+            print(e)
+            return "Error finding todays appointments"

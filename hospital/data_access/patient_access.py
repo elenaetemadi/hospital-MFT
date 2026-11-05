@@ -1,7 +1,7 @@
 
 class PatientDa:
-    def __init__(self):
-        self.patient_list = []
+    def __init__(self,patient_list):
+        self.patient_list = patient_list
 
     def save_patient(self, patient):
         self.patient_list.append(patient)
@@ -26,20 +26,12 @@ class PatientDa:
         return self.patient_list
 
     def book_appointment(self, patient_id):
-        for patient in self.patient_list:
-            if patient.patient_id == patient_id:
-                my_patient = patient
-                print(f"The patient booked the appointment for {my_patient}")
-                return
-        else:
-            raise ValueError('patient_id does not exist')
+        patient=self.find_by_patient_id(patient_id)
+        print(f"The patient booked the appointment for {patient}")
 
     def cancel_appointment(self):
         print("The patient cancelled the appointment")
 
     def get_medical_history(self, patient_id):
-        for patient in self.patient_list:
-            if patient.patient_id == patient_id:
-                return patient.disease
-        else:
-            raise ValueError('patient_id does not exist')
+        patient=self.find_by_patient_id(patient_id)
+        return patient.disease

@@ -122,6 +122,7 @@ from models.person import Person
 # print('.'*50)
 # print(appointmentcontroller.find_patient('sina','alipour'))
 
+#--------------test appointment controller successfully-----------
 
 
 

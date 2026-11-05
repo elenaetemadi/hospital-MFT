@@ -1,9 +1,10 @@
+from models import appointment
 from models.person import Person
 
 
 class AppointmentDa:
-    def __init__(self):
-        self.appointment_list=[]
+    def __init__(self,appointment_list):
+        self.appointment_list=appointment_list
 
     def save_appointment(self,appointment):
         self.appointment_list.append(appointment)
@@ -27,18 +28,23 @@ class AppointmentDa:
         return self.appointment_list
 
     def find_doctor(self,name,family):
-        doctors_list=[]
-        for appointments in self.appointment_list:
-            if appointments.doctor.family == family and appointments.doctor.name == name:
-                return appointments
-        else:
+        result=[
+            appointment for appointment in self.appointment_list
+            if appointment.doctor.family == family
+            and appointment.doctor.name == name
+        ]
+        if not result:
             raise ValueError("appointment not found")
 
+        return result
 
     def find_patient(self,name,family):
-        for appointments in self.appointment_list:
-            if appointments.patient.family == family and appointments.patient.name == name:
-                return appointments
-        else:
+        result = [
+            appointment for appointment in self.appointment_list
+            if appointment.patient.family == family
+            and appointment.patient.name == name
+        ]
+        if not result:
             raise ValueError("appointment not found")
 
+        return result

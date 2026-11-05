@@ -1,9 +1,9 @@
-from service.patient_service import *
+
 from models.patient import Patient
 
 class PatientController:
-    def __init__(self):
-        self.patient_service = PatientService()
+    def __init__(self,patient_service):
+        self.patient_service = patient_service
 
     def save_patient(self,national_id, name, family,phone, address, patient_id, disease, birth_date):
         try:

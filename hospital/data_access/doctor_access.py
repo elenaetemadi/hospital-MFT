@@ -1,7 +1,7 @@
 
 class DoctorDa:
-    def __init__(self):
-        self.doctor_list = []
+    def __init__(self,doctor_list):
+        self.doctor_list = doctor_list
 
     def save_doctor(self, doctor):
         self.doctor_list.append(doctor)
