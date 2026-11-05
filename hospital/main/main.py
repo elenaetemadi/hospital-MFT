@@ -16,21 +16,21 @@ from controller.appointment_controller import AppointmentController
 from controller.hospital_controller import HospitalController
 
 
-# Create Hospital Data
+
 hospital_data = HospitalDa()
 
-# Create Data Access
+
 patient_data = PatientDa(hospital_data.patient_list)
 doctor_data = DoctorDa(hospital_data.doctor_list)
 appointment_data = AppointmentDa(hospital_data.appointment_list)
 
-# Create Services
+
 appointment_service = AppointmentService(appointment_data,patient_data,doctor_data)
 patient_service = PatientService(patient_data, appointment_service)
 doctor_service = DoctorService(doctor_data,appointment_service)
 hospital_service = HospitalService(hospital_data)
 
-# Create Controllers
+
 patient_controller = PatientController(patient_service)
 doctor_controller = DoctorController(doctor_service)
 appointment_controller = AppointmentController(appointment_service)
