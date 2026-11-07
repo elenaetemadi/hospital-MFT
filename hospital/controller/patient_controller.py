@@ -45,29 +45,6 @@ class PatientController:
             print(e)
             return "Error finding all patient"
 
-    def book_appointment(self,patient_id):
-        try:
-            self.patient_service.book_appointment(patient_id)
-            return "booked successfully"
-
-        except ValueError as e:
-            return str(e)
-
-        except Exception as e:
-            print(e)
-            return "Error booking patient"
-
-    def cancel_appointment(self):
-        try:
-            self.patient_service.cancel_appointment()
-            return "Canceled successfully"
-
-        except ValueError as e:
-            return str(e)
-
-        except Exception as e:
-            print(e)
-            return "Error Canceling patient"
 
     def get_medical_history(self,patient_id):
         try:

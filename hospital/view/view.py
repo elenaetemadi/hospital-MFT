@@ -23,7 +23,7 @@ class HospitalView:
     def create_patient(self):
         window = tk.Toplevel(self.window)
         window.title("Patient")
-        window.geometry("400x600")
+        window.geometry("400x750")
 
         tk.Label(window, text="PATIENT", font=("Arial", 16)).pack(pady=10)
 
@@ -109,17 +109,19 @@ class HospitalView:
             except Exception as e:
                 messagebox.showerror("Error", str(e))
 
+
         tk.Button(window, text="Save Patient", command=save).pack(pady=5)
         tk.Button(window, text="Find Patient", command=find).pack(pady=5)
         tk.Button(window, text="Delete Patient", command=delete).pack(pady=5)
         tk.Button(window, text="Show All Patients", command=show_all).pack(pady=5)
+
 
 # -------------------- DOCTOR --------------------
 
     def create_doctor(self):
         window = tk.Toplevel(self.window)
         window.title("Doctor")
-        window.geometry("400x600")
+        window.geometry("400x750")
 
         tk.Label(window, text="DOCTOR", font=("Arial", 16)).pack(pady=10)
 
@@ -151,6 +153,10 @@ class HospitalView:
         license_entry = tk.Entry(window)
         license_entry.pack()
 
+        tk.Label(window, text="Appointment ID").pack()
+        appointment_id_entry=tk.Entry(window)
+        appointment_id_entry.pack()
+
         tk.Label(window, text="Experience").pack()
         experience = tk.Entry(window)
         experience.pack()
@@ -158,7 +164,7 @@ class HospitalView:
         def save():
             try:
                 result = self.doctor_controller.save_doctor(
-                    national_id.get(),
+                    int(national_id.get()),
                     name.get(),
                     family.get(),
                     phone.get(),address.get(),
@@ -200,17 +206,53 @@ class HospitalView:
             except Exception as e:
                 messagebox.showerror("Error", str(e))
 
+        def examine():
+            try:
+                license = int(license_entry.get())
+                appointment_id = int(appointment_id_entry.get())
+
+                result = self.doctor_controller.examine(
+                    license, appointment_id
+                )
+
+                messagebox.showinfo("Examine", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def prescribe():
+            try:
+                result = self.doctor_controller.prescribe()
+                messagebox.showinfo("Prescribe", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def today_appointments():
+            try:
+                license = int(license_entry.get())
+
+                result = self.appointment_controller.find_today_appointments(license)
+
+                messagebox.showinfo("Today's Appointments", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
         tk.Button(window, text="Save Doctor", command=save).pack(pady=5)
         tk.Button(window, text="Find Doctor", command=find).pack(pady=5)
         tk.Button(window, text="Delete Doctor", command=delete).pack(pady=5)
         tk.Button(window, text="Show All Doctors", command=show_all).pack(pady=5)
+        tk.Button(window,text="Examine Patient",command=examine).pack(pady=5)
+        tk.Button(window,text="Prescribe Patient",command=prescribe).pack(pady=5)
+        tk.Button(window,text="Today Appointments",command=today_appointments).pack(pady=5)
+
 
     # -------------------- APPOINTMENT --------------------
 
     def create_appointment(self):
         window = tk.Toplevel(self.window)
         window.title("Appointment")
-        window.geometry("400x500")
+        window.geometry("400x650")
 
         tk.Label(window, text="APPOINTMENT", font=("Arial", 16)).pack(pady=10)
 
@@ -229,6 +271,14 @@ class HospitalView:
         tk.Label(window, text="Date and Time (YYYY-MM-DD HH:MM)").pack()
         appointment_date = tk.Entry(window)
         appointment_date.pack()
+
+        tk.Label(window, text="Name").pack()
+        name_entry = tk.Entry(window)
+        name_entry.pack()
+
+        tk.Label(window, text="Family").pack()
+        family_entry = tk.Entry(window)
+        family_entry.pack()
 
         def save():
             try:
@@ -286,10 +336,39 @@ class HospitalView:
             except Exception as e:
                 messagebox.showerror("Error", str(e))
 
+        def find_doctor():
+            try:
+                name = name_entry.get()
+                family = family_entry.get()
+
+                result = self.appointment_controller.find_doctor(
+                    name, family
+                )
+
+                messagebox.showinfo("Doctor Appointments", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        def find_patient():
+            try:
+                name = name_entry.get()
+                family = family_entry.get()
+
+                result = self.appointment_controller.find_patient(
+                    name, family
+                )
+
+                messagebox.showinfo("Patient Appointments", str(result))
+
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
         tk.Button(window, text="Save Appointment", command=save).pack(pady=5)
         tk.Button(window, text="Find Appointment", command=find).pack(pady=5)
         tk.Button(window, text="Delete Appointment", command=delete).pack(pady=5)
         tk.Button(window, text="Show All Appointments", command=show_all).pack(pady=5)
+        tk.Button(window,text="Find Doctor Appointments",command=find_doctor).pack(pady=5)
+        tk.Button(window,text="Find Patient Appointments",command=find_patient).pack(pady=5)
 
     # -------------------- HOSPITAL --------------------
 

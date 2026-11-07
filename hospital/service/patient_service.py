@@ -8,8 +8,8 @@ class PatientService:
 
     def save_patient(self,patient):
         for patients in self.data.patient_list:
-            if patient.patient_id == patients.patient_id:
-                raise ValueError("The patient already exists")
+            if patient.patient_id == patients.patient_id or patient.national_id == patients.national_id:
+                raise ValueError("This patient id/national id  already exists")
 
         self.data.save_patient(patient)
 
@@ -22,14 +22,8 @@ class PatientService:
     def find_all_patient(self):
         return self.data.find_all_patient()
 
-    def book_appointment(self,appointment_id,patient_id,license,appointment_datetime):
-        return self.appointment_service.book_appointment(appointment_id,patient_id,license,appointment_datetime)
-
     def find_patient_appointment(self,patient_id):
         return self.appointment_service.find_patient_appointment(patient_id)
-
-    def cancel_appointment(self):
-        self.data.cancel_appointment()
 
     def get_medical_history(self,patient_id):
         return self.data.get_medical_history(patient_id)

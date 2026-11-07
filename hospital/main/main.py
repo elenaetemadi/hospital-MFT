@@ -20,7 +20,7 @@ from controller.hospital_controller import HospitalController
 hospital_data = HospitalDa()
 
 
-patient_data = PatientDa(hospital_data.patient_list)
+patient_data = PatientDa(hospital_data.patient_list,hospital_data.appointment_list)
 doctor_data = DoctorDa(hospital_data.doctor_list)
 appointment_data = AppointmentDa(hospital_data.appointment_list)
 

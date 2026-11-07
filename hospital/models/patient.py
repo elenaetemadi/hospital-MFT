@@ -34,12 +34,6 @@ class Patient(Person):
         validation_birth_date(birth_date)
         self.__birth_date = birth_date
 
-    def book(self):
-        print("The patient booked the appointment")
-
-    def cancel_appointment(self):
-        print("The patient cancelled the appointment")
-
     def get_medical_history(self):
         return self.disease
 

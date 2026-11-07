@@ -36,10 +36,10 @@ class DoctorController:
             print(e)
             return "Error finding doctor"
 
-    def examine(self):
+    def examine(self,license,appointment_id):
         try:
-            self.doctor_service.examine()
-            return "examined doctor successfully"
+            return self.doctor_service.examine(license,appointment_id)
+
         except Exception as e:
             print(e)
             return "Error examining doctor"
@@ -64,4 +64,4 @@ class DoctorController:
             return self.doctor_service.find_todays_appointments(license)
         except Exception as e:
             print(e)
-            return "Error finding todays appointments"
+            return "Error finding today's appointments"
